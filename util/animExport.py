@@ -1,6 +1,6 @@
-
-
-
+"""
+    Animation Exporter 
+"""
 
 __version__ = '0.6'
 __author__ = 'Bohdon Sayre'
@@ -10,7 +10,7 @@ import logging
 from xml.dom import minidom
 from pymel.core import *
 
-logger = logging.getLogger('Ani Export')
+logger = logging.getLogger('Anim Export')
 logger.setLevel(logging.DEBUG)
 
 
@@ -22,7 +22,7 @@ class AnimationExporter():
     
     >>> ae = AnimationExporter(data)
     >>> ae.toprettyxml() -> build and return the exported text as well-formatted xml
-    >>> ae.write(filename) -> build and write animation to a file
+    >>> ae.write() -> build and write animation to a file
     """
     
     
