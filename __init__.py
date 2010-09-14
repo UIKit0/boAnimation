@@ -17,6 +17,11 @@
 
 import sys, os, logging
 
+__VERSION__ = (0, 1, 4)
+
+__version__ = '.'.join([str(n) for n in __VERSION__])
+__author__ = 'Bohdon Sayre'
+
 __LOG_LEVEL__ = logging.DEBUG
 __RELOAD__ = True
 
@@ -39,18 +44,19 @@ def devReload():
     reload(boAnimation)
     if __RELOAD__:
         from boAnimation import gui, util, aniLib, views
-        from boAnimation.views import aniLibViews, aniToolsViews, mainViews, utilViews
         reload(gui)
         reload(util)
         reload(aniLib)
         reload(views)
+        from boAnimation.views import aniLibViews, aniToolsViews, mainViews, utilViews
         reload(aniLibViews)
         reload(aniToolsViews)
         reload(mainViews)
         reload(utilViews)
+        from boAnimation.util import animCopy, animExport, animImport, animPaste
+        reload(animCopy)
+        reload(animExport)
+        reload(animImport)
+        reload(animPaste)
         
 
-__VERSION__ = (0, 1, 4)
-
-__version__ = '.'.join([str(n) for n in __VERSION__])
-__author__ = 'Bohdon Sayre'

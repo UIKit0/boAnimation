@@ -11,7 +11,7 @@ LOG = boAnimation.getLog('aniToolsViews')
 
 
 class AniToolsMainView(view.View):
-    _displayName = 'Ani Tools'
+    _displayName = 'Anim Tools'
     def links(self):
         return ['MainView', self.viewName]
     
