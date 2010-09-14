@@ -1,0 +1,79 @@
+
+"""Unused XML Implementation::
+
+def buildDom(self):
+    LOG.debug('Building Animation DOM...')
+    
+    self.anidom = minidom.Document()
+    ani = self.anidom.createElement('animation')
+    ani.setAttribute('version', self.version)
+    self.anidom.appendChild(ani)
+    
+    LOG.debug('Building Settings...')
+    if not self.validateSettings():
+        LOG.error('Settings were not valid')
+        return
+    self.buildSettings()
+    
+    LOG.debug('Building Nodes...')
+    self.buildNodes()
+    
+    LOG.debug('Animation DOM Built')
+
+def buildSettings(self):
+    docElem = self.anidom.documentElement
+    author = self.anidom.createElement('author')
+    settings = self.anidom.createElement('settings')
+    info = self.anidom.createElement('info')
+    #set author attributes
+    author.setAttribute('username', self.author['username'])
+    author.setAttribute('name', self.author['name'])
+    #set settings attributes
+    settings.setAttribute('startFrame', self.settings['startFrame'])
+    settings.setAttribute('endFrame', self.settings['endFrame'])
+    #set info attributes
+    info.setAttribute('dateCreated', self.info['dateCreated'])
+    infoText = self.anidom.createTextNode(self.info['data'])
+    info.appendChild(infoText)
+    #append child to parent element
+    docElem.appendChild(author)
+    docElem.appendChild(settings)
+    docElem.appendChild(info)
+
+def buildNodes(self):
+    docElem = self.anidom.documentElement
+    nodesElem = self.anidom.createElement('nodes')
+    docElem.appendChild(nodesElem)
+    
+    anims = getAnimations(self.nodes)
+    for anim in anims:
+        if anim != None:
+            nodeElem = self.anidom.createElement('node')
+            nodeElem.setAttribute('name', anim['name'])
+            for curve in anim['curves']:
+                nodeCurve = self.anidom.createElement('animCurve')
+                nodeCurve.setAttribute('attr', curve['attr'])
+                nodeCurve.setAttribute('preInfinity', curve['preInfinity'])
+                nodeCurve.setAttribute('postInfinity', curve['postInfinity'])
+                for key in curve['keys']:
+                    nodeCurveKey = self.anidom.createElement('key')
+                    nodeCurveKey.setAttribute('time', key['time'])
+                    nodeCurveKey.setAttribute('value', key['value'])
+                    nodeCurveKey.setAttribute('inbetween', key['breakdown'])
+                    nodeCurveKeyTan = self.anidom.createElement('tangents')
+                    tans = key['tangents']
+                    nodeCurveKeyTan.setAttribute('weightLock', tans['weightLock'])
+                    nodeCurveKeyTan.setAttribute('lock', tans['lock'])
+                    nodeCurveKeyTan.setAttribute('in', tans['in']['type'])
+                    nodeCurveKeyTan.setAttribute('out', tans['out']['type'])
+                    if tans['in']['type'] == 'fixed':
+                        nodeCurveKeyTan.setAttribute('inAngle', tans['in']['angle'])
+                        nodeCurveKeyTan.setAttribute('inWeight', tans['in']['weight'])
+                    if tans['out']['type'] == 'fixed':
+                        nodeCurveKeyTan.setAttribute('outAngle', tans['out']['angle'])
+                        nodeCurveKeyTan.setAttribute('outWeight', tans['out']['weight'])
+                    nodeCurveKey.appendChild(nodeCurveKeyTan)
+                    nodeCurve.appendChild(nodeCurveKey)
+                nodeElem.appendChild(nodeCurve)
+            nodesElem.appendChild(nodeElem)
+"""
