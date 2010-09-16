@@ -30,6 +30,9 @@ class AnimImportExportView(view.View):
     headerHeight = 30
     footerHeight = 30
     aniListWidth = 160
+    progBarHeight = 12
+    
+    importIter = 1
     
     animData = {}
     
@@ -133,7 +136,7 @@ class AnimImportExportView(view.View):
     
     def animListControlContent(self):
         with formLayout(nd=100) as form:
-            removeBtn = button(l='Remove', bgc=[0.32, 0.26, 0.26])
+            removeBtn = button(l='Remove', bgc=[0.32, 0.26, 0.26], c=Callback(self.removeAnimItems))
             renameBtn = button(l='Rename', bgc=[0.28, 0.28, 0.28], c=Callback(self.renameAnimItem))
         formLayout(form, e=True,
             af=[(removeBtn, 'left', 0),
@@ -148,10 +151,11 @@ class AnimImportExportView(view.View):
             with self.stngsTemplate:
                 with frameLayout(l='Settings', mw=4, mh=4, bs='out') as stngsFrame:
                     self.stngsFrameContent()
-                with frameLayout(l='Paste Settings', mw=4, mh=4, bs='out') as changeStngsFrame:
+                with frameLayout(l='Paste Settings', mw=4, mh=4, bs='out', cl=False, cll=True) as changeStngsFrame:
                     self.changeStngsFrameContent()
                 with frameLayout(l='Export Settings', mw=4, mh=4, bs='out', cl=False, cll=True) as exportStngsFrame:
                     self.exportStngsContent()
+            progBar = progressBar(h=self.progBarHeight)
         
         formLayout(form, e=True,
             af=[
@@ -162,15 +166,24 @@ class AnimImportExportView(view.View):
                 (changeStngsFrame, 'right', 0),
                 (exportStngsFrame, 'left', 0),
                 (exportStngsFrame, 'right', 0),
-                (exportStngsFrame, 'bottom', self.headerHeight),
+                (exportStngsFrame, 'bottom', self.footerHeight),
+                (progBar, 'left', 0),
+                (progBar, 'right', 0),
+                (progBar, 'bottom', 6),
             ],
-            ap=[(stngsFrame, 'bottom', self.sep*0.5, 40),
-                (changeStngsFrame, 'top', self.sep*0.5, 40)],
-            ac=[(changeStngsFrame, 'bottom', self.sep, exportStngsFrame)],
+            ap=[
+                (stngsFrame, 'bottom', self.sep*0.5, 46),
+                (changeStngsFrame, 'top', self.sep*0.5, 46)
+            ],
+            ac=[
+                (changeStngsFrame, 'bottom', self.sep, exportStngsFrame),
+            ],
         )
         self.stngsFrame = stngsFrame
         self.changeStngsFrame = changeStngsFrame
         self.exportStngsFrame = exportStngsFrame
+        self.progBar = progBar
+        self.setProg(visible=False)
         self.setSettings()
         return form
     
@@ -185,11 +198,11 @@ class AnimImportExportView(view.View):
                 template = uiTemplate(force=True)
                 template.define(text, h=rowHeight)
                 with template:
-                    text('Time Offset')
-                    text('Sample Sub-Range')
-                    text('Convert Time Units')
-                    text('Object Association')
-                    text('')
+                    text(l='Time Offset')
+                    text(l='Sample Sub-Range')
+                    text(l='Convert Time Units')
+                    text(l='Object Association')
+                    text(l='')
             with columnLayout(cal='left', adj=True, rs=2) as controlCol:
                 floatField(h=rowHeight, w=60)
                 with rowLayout(h=rowHeight, nc=3, cw3=(20, 60, 60)):
@@ -198,7 +211,7 @@ class AnimImportExportView(view.View):
                     floatField(h=rowHeight, w=60)
                 checkBox(h=rowHeight, l='')
                 radioButtonGrp(h=rowHeight, nrb=3, la3=('Default', 'Smart', 'Search and Replace'), cw3=(66, 60, 100), sl=1)
-                text('Exact naming matches only', en=False)
+                text(l='Exact naming matches only', en=False)
         formLayout(mainForm, e=True,
             af=[
                 (labelCol, 'top', 0),
@@ -220,7 +233,7 @@ class AnimImportExportView(view.View):
                 template = uiTemplate(force=True)
                 template.define(text, h=rowHeight)
                 with template:
-                    text('Notes')
+                    text(l='Notes')
             with columnLayout(cal='left', adj=True, rs=2) as controlCol:
                 textField(h=rowHeight)
         formLayout(mainForm, e=True,
@@ -241,7 +254,9 @@ class AnimImportExportView(view.View):
     def getAnimBtnHandler(self):
         selList = selected()
         if len(selList) > 0:
-            anim = animUtil.getAnim(selList)
+            self.setProg(visible=True)
+            anim = animUtil.getAnim(selList, self.updateProg)
+            self.setProg(visible=False)
             newName = self.getNewCopyName()
             self.animData[newName] = anim
             self.updateAnimList()
@@ -249,17 +264,46 @@ class AnimImportExportView(view.View):
         return None
     
     def importAnimBtnHandler(self):
-        pass
+        f = 'L:/show/shots/animExports/{0}_temp.ani'.format(os.environ['USER'])
+        anim = None
+        with open(f, 'rb') as fp:
+            anim = animUtil.load(fp)
+            LOG.debug('Anim: {0}'.format(anim))
+        
+        settings = {
+            'author':'',
+            'date':'',
+            'notes':'',
+            'startFrame':'',
+            'endFrame':'',
+            'linearUnits':'',
+            'fps':'',
+        }
+        data = {
+            'settings':settings,
+            'anim':anim,
+        }
+        if anim is not None:
+            self.animData['{0}_temp {1:03}'.format(os.environ['USER'], self.importIter)] = data
+            self.importIter += 1
+            self.updateAnimList()
     
     def setAnimBtnHandler(self):
         selItems = self.animList.getSelectItem()
         if selItems is not None:
             selItem = selItems[0]
             if self.animData.has_key(selItem):
-                animUtil.setAnim(self.animData[selItem]['anim'], self.animData[selItem]['settings'])
+                self.setProg(visible=True)
+                animUtil.setAnim(self.animData[selItem]['anim'], self.animData[selItem]['settings'], self.updateProg)
+                self.setProg(visible=False)
     
     def exportAnimBtnHandler(self):
-        pass
+        selItems = self.animList.getSelectItem()
+        if selItems is not None:
+            selItem = selItems[0]
+            f = 'L:/show/shots/animExports/{0}_temp.ani'.format(os.environ['USER'])
+            with open(f, 'wb') as fp:
+                animUtil.dump(self.animData[selItem]['anim'], fp, dataIsAnim=True, **self.animData[selItem]['settings'])
     
     
     def animListSelectCommand(self):
@@ -267,6 +311,7 @@ class AnimImportExportView(view.View):
         if selItems is not None:
             selItem = selItems[0]
             data = self.animData[selItem]['settings']
+            nodeCount = len(self.animData[selItem]['anim'])
             dataList = [
                 'author',
                 'notes',
@@ -275,8 +320,9 @@ class AnimImportExportView(view.View):
                 'date',
                 'fps',
                 'linearUnits',
+                'nodes',
             ]
-            self.setSettings(dataList=dataList, **data)
+            self.setSettings(dataList=dataList, nodes=nodeCount, **data)
         else:
             self.setSettings()
     
@@ -288,6 +334,18 @@ class AnimImportExportView(view.View):
         items.sort()
         for item in items:
             self.animList.append(item)
+    
+    def updateProg(self, count, num):
+        """Update the progress bar based on a max count and iterator"""
+        self.setProg(maxValue=count, progress=num)
+    
+    def setProg(self, progress=None, maxValue=None, visible=None):
+        if maxValue is not None:
+            self.progBar.setMaxValue(maxValue)
+        if progress is not None:
+            self.progBar.setProgress(progress)
+        if visible is not None:
+            self.progBar.setVisible(visible)
     
     def clearStngsFrame(self):
         nch = frameLayout(self.stngsFrame, q=True, nch=True)
@@ -313,10 +371,10 @@ class AnimImportExportView(view.View):
                     with template:
                         with columnLayout(cal='right', adj=True, rs=2, w=labelWidth) as labelCol:
                             for i in range(len(keys)):
-                                text(keys[i], en=False)
+                                text(l=keys[i], en=False)
                         with columnLayout(cal='left', adj=True, rs=2) as controlCol:
                             for i in range(len(values)):
-                                text(values[i], en=True)
+                                text(l=values[i], en=True)
                 
                 formLayout(form, e=True,
                     af=[
@@ -331,7 +389,7 @@ class AnimImportExportView(view.View):
                 )
         else:
             with self.stngsFrame:
-                text('Copy or Import Animation and select an item...', en=False)
+                text(l='Copy or Import Animation and select an item...', en=False)
     
     def setChangeStngs(self, enabled=None):
         if enabled is not None:
@@ -370,7 +428,32 @@ class AnimImportExportView(view.View):
                         self.animData[newName] = self.animData[selItem]
                         del self.animData[selItem]
                         self.updateAnimList()
-            
+    
+    def removeAnimItems(self):
+        selItems = self.animList.getSelectItem()
+        if selItems is not None:
+            if self.removeAnimItemWarning():
+                for item in selItems:
+                    if self.animData.has_key(item):
+                        del self.animData[item]
+                self.updateAnimList()
+     
+    def removeAnimItemWarning(self):
+        kargs = {
+            't':'Removing Anim Item(s)',
+            'm':'''Animation clips that have not been\nexported will be gone forever!''',
+            'icn':'warning',
+            'b':['Remove', 'Cancel'],
+            'cb':'Cancel',
+            'ma':'center',
+            'p':'boAnimWin',
+        }
+        result = confirmDialog(**kargs)
+        if result == 'Remove':
+            return True
+        else:
+            return False
+
             
 
 

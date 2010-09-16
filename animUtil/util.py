@@ -50,7 +50,7 @@ def getDate():
 
 
 
-def getAnimations(nodes):
+def getAnimations(nodes, updateFunc=None):
     """
     Return all animation data for all specified nodes
     The result is a list of animation data dictionaries
@@ -60,9 +60,10 @@ def getAnimations(nodes):
     for node in nodes:
         anim = getAnimation(node)
         animList.append(anim)
-        
         num += 1
         LOG.debug('getting anim {0}/{1}: {2}'.format(num, count, node))
+        if updateFunc is not None:
+            updateFunc(count, num)
     return animList
 
 def getAnimation(node):
@@ -110,12 +111,14 @@ def getAnimation(node):
 
 
 
-def setAnimations(animList):
+def setAnimations(animList, updateFunc=None):
     count, num = len(animList), 0
     for anim in animList:
         num += 1
         LOG.debug('setting anim {0}/{1}: {2}'.format(num, count, anim['name']))
         setAnimation(anim)
+        if updateFunc is not None:
+            updateFunc(count, num)
 
 
 

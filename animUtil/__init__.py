@@ -48,9 +48,9 @@ def dumps(data, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, line
     return cls(cls=cls, startFrame=startFrame, endFrame=endFrame, linearUnits=linearUnits,
             fps=fps, author=author, date=date, notes=notes, autoEnabled=autoEnabled, **kw).encode(anim)
 
-def getAnim(nodes):
+def getAnim(nodes, updateFunc=None):
     """Get an animation object that includes both anim data and settings"""
-    anim = getAnimations(nodes)
+    anim = getAnimations(nodes, updateFunc)
     settings = {
         'author':getUser(),
         'date':getDate(),
@@ -62,9 +62,9 @@ def getAnim(nodes):
     }
     return {'anim':anim, 'settings':settings}
     
-def setAnim(anim, settings):
+def setAnim(anim, settings, updateFunc=None):
     """Apply animation back to corresponding nodes"""
-    setAnimations(anim)
+    setAnimations(anim, updateFunc)
 
 def load(fp, cls=None):
     return loads(fp.read(), cls=cls)
