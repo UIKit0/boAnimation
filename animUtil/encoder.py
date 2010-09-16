@@ -3,7 +3,7 @@
 
 __all__ = ['AnimEncoder']
 
-from . import util as aniutil
+from .util import getStartFrame, getEndFrame, getUser, getFps, getLinearUnit, getDate
 from pymel.core import *
 
 import logging
@@ -43,7 +43,7 @@ class AnimEncoder(object):
     
     __all__ = ['__init__', 'encode', 'iterencode']
     required_settings = []
-    auto_settings = ['author', 'date', 'notes', 'startFrame', 'endFrame', 'linearUnits', 'fps']
+    auto_settings = ['author', 'date', 'notes', 'startFrame', 'endFrame', 'linearUnit', 'fps']
     all_settings = required_settings + auto_settings
     setting_err_fmt = '`{s}` was not set'
     setting_auto_fmt = '`{s}` has been set to `{sval}`'
@@ -58,11 +58,11 @@ class AnimEncoder(object):
     
     float_tol = 6
     
-    def __init__(self, startFrame=None, endFrame=None, linearUnits=None, fps=None, 
+    def __init__(self, startFrame=None, endFrame=None, linearUnit=None, fps=None, 
                 author=None, date=None, notes='', autoEnabled=True, **kw):
         self.startFrame = startFrame
         self.endFrame = endFrame
-        self.linearUnits = linearUnits
+        self.linearUnit = linearUnit
         self.fps = fps
         self.author = author
         self.date = date
@@ -90,22 +90,22 @@ class AnimEncoder(object):
     
     
     def _auto_startFrame(self):
-        return aniutil.getStartFrame()
+        return getStartFrame()
     
     def _auto_endFrame(self):
-        return aniutil.getEndFrame()
+        return getEndFrame()
     
-    def _auto_linearUnits(self):
-        return 'ft'
+    def _auto_linearUnit(self):
+        return getLinearUnit()
     
     def _auto_fps(self):
-        return 25
+        return getFps()
     
     def _auto_author(self):
-        return aniutil.getUser()
+        return getUser()
     
     def _auto_date(self):
-        return '2010-08-28'
+        return getDate()
     
     
     def _encodeSettings(self, fmt={'section':SECTION_FMT, 'setting':SETTING_FMT}):
@@ -119,11 +119,15 @@ class AnimEncoder(object):
         LOG.debug('Encoding animation')
         
         animLines = [fmt['section'].format(name='animation')]
+        count, num = len(anim), 0
         for node in anim:
             kw = { 'node':node['name'] }
             nodeLine = fmt['node'].format(**kw)
             
             animLines.append(nodeLine)
+            
+            num += 1
+            LOG.debug('encoding node {0}/{1}: {2}'.format(num, count, node['name']))
             
             for curv in node['curves']:
                 kw = { 'attr':curv['attr'] }
@@ -132,7 +136,6 @@ class AnimEncoder(object):
                 animLines.append(curveLine)
                 
                 for key in curv['keys']:
-                    LOG.debug('Encoding key: {0}'.format(key))
                     data = []
                     kw = {
                         'time': key['time'],

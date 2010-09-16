@@ -37,7 +37,16 @@ def getStartFrame():
 def getEndFrame():
     return playbackOptions(q=True, aet=True)
 
+def getFps():
+    return mel.currentTimeUnitToFPS()
 
+def getLinearUnit():
+    return currentUnit(q=True, l=True)
+
+def getDate():
+    import time
+    from datetime import date
+    return str(date.fromtimestamp(time.time()))
 
 
 
@@ -47,9 +56,13 @@ def getAnimations(nodes):
     The result is a list of animation data dictionaries
     """
     animList = []
+    count, num = len(nodes), 0
     for node in nodes:
         anim = getAnimation(node)
         animList.append(anim)
+        
+        num += 1
+        LOG.debug('getting anim {0}/{1}: {2}'.format(num, count, node))
     return animList
 
 def getAnimation(node):
@@ -98,11 +111,11 @@ def getAnimation(node):
 
 
 def setAnimations(animList):
-    count = len(animList)
-    num = 0
+    count, num = len(animList), 0
     for anim in animList:
-        LOG.debug('{0}/{1} - {2}'.format(num, count, anim['name'])
-        setAnimation(anim) 
+        num += 1
+        LOG.debug('setting anim {0}/{1}: {2}'.format(num, count, anim['name']))
+        setAnimation(anim)
 
 
 
@@ -112,17 +125,17 @@ def setAnimation(anim, create=True):
     try:
         node = PyNode(anim['name'])
     except:
-        LOG.error('Node does not exists {0}'.format(node))
+        if type(anim) is dict and anim.has_key('name'):
+            LOG.error('Node does not exist {0}'.format(anim['name']))
+        else:
+            LOG.error('No animation was found')
         return
     
-    count = len(anim['curves'])
-    num = 0
     for curveData in anim['curves']:
         attr = curveData['attr']
         curve = getCurve(node, attr, create=create)
         
-        num += 1
-        LOG.debug('{0}/{1} - {2}'.format(num, count, curve))
+        #LOG.debug('{0}/{1} - {2}'.format(num, count, curve))
         
         if curve is None:
             continue

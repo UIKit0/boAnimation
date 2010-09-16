@@ -3,7 +3,6 @@
 
 __all__ = ['AnimDecoder']
 
-from . import util as aniutil
 from pymel.core import *
 
 import logging
@@ -62,7 +61,7 @@ class AnimDecoder(object):
             self.anim[self.curNodeId]['name'] = node
             self.anim[self.curNodeId]['curves'] = []
             self.curCurveId = -1
-            LOG.debug(' node: {0}'.format(node))
+            LOG.debug('decoding node {0}: {1}'.format(self.curNodeId, node))
             return
         
         m = crvpat.match(line)
@@ -71,7 +70,7 @@ class AnimDecoder(object):
             self.curCurveId += 1
             self.anim[self.curNodeId]['curves'].append({})
             self.anim[self.curNodeId]['curves'][self.curCurveId] = {'attr':curve, 'keys':[]}
-            LOG.debug('  curve: {0}'.format(curve))
+            #LOG.debug('decoding curve: {0}'.format(curve))
             return
         
         m = keychpat.match(line)
@@ -100,7 +99,7 @@ class AnimDecoder(object):
                 key['tangent']['outWeight'] = float(vals[outTanIndex+1])
             
             self.anim[self.curNodeId]['curves'][self.curCurveId]['keys'].append(key)
-            #LOG.debug('   key: {0}'.format(vals))
+            #LOG.debug('decoding key: {0}'.format(vals))
             return
         
     

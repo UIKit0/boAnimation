@@ -11,7 +11,7 @@ __all__ = [
 __author__ = 'Bohdon Sayre <bohdon@gmail.com>'
 
 
-from . import util as aniutil
+from .util import getAnimations, setAnimations, getUser, getDate, getStartFrame, getEndFrame, getLinearUnit, getFps
 from .encoder import AnimEncoder
 from .decoder import AnimDecoder
 from pymel.core import ls
@@ -28,7 +28,7 @@ def dump(data, fp, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, l
     if dataIsAnim:
         anim = data
     else:
-        anim = aniutil.getAnimations(data)
+        anim = getAnimations(data)
     lines = cls(cls=cls, startFrame=startFrame, endFrame=endFrame, linearUnits=linearUnits,
             fps=fps, author=author, date=date, notes=notes, autoEnabled=autoEnabled, **kw).iterencode(anim)
     for line in lines:
@@ -44,10 +44,27 @@ def dumps(data, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, line
     if dataIsAnim:
         anim = data
     else:
-        anim = aniutil.getAnimations(data)
+        anim = getAnimations(data)
     return cls(cls=cls, startFrame=startFrame, endFrame=endFrame, linearUnits=linearUnits,
             fps=fps, author=author, date=date, notes=notes, autoEnabled=autoEnabled, **kw).encode(anim)
 
+def getAnim(nodes):
+    """Get an animation object that includes both anim data and settings"""
+    anim = getAnimations(nodes)
+    settings = {
+        'author':getUser(),
+        'date':getDate(),
+        'notes':'',
+        'startFrame':getStartFrame(),
+        'endFrame':getEndFrame(),
+        'linearUnits':getLinearUnit(),
+        'fps':getFps()
+    }
+    return {'anim':anim, 'settings':settings}
+    
+def setAnim(anim, settings):
+    """Apply animation back to corresponding nodes"""
+    setAnimations(anim)
 
 def load(fp, cls=None):
     return loads(fp.read(), cls=cls)

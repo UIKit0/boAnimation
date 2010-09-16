@@ -17,7 +17,7 @@
 
 import sys, os, logging
 
-__VERSION__ = (0, 1, 4)
+__VERSION__ = (0, 2, 16)
 
 __version__ = '.'.join([str(n) for n in __VERSION__])
 __author__ = 'Bohdon Sayre'
@@ -34,29 +34,37 @@ def getLog(name=None):
     log.setLevel(__LOG_LEVEL__)
     return log
 
-def Gui():
+def Gui(*args, **kargs):
     import boAnimation.gui
     devReload()
-    boAnimation.gui.Gui()
+    boAnimation.gui.Gui(*args, **kargs)
 
-def devReload():
+def devReload(exclude=[]):
     import boAnimation
     reload(boAnimation)
     if __RELOAD__:
-        from boAnimation import gui, util, aniLib, views
-        reload(gui)
-        reload(util)
-        reload(aniLib)
-        reload(views)
-        from boAnimation.views import aniLibViews, aniToolsViews, mainViews, utilViews
-        reload(aniLibViews)
-        reload(aniToolsViews)
-        reload(mainViews)
-        reload(utilViews)
-        from boAnimation.util import animCopy, animExport, animImport, animPaste
-        reload(animCopy)
-        reload(animExport)
-        reload(animImport)
-        reload(animPaste)
+        getLog().debug('Reloading Main')
+        import boAnimation.gui
+        import boAnimation.animUtil
+        import boAnimation.views
+        reload(boAnimation.gui)
+        reload(boAnimation.animUtil)
+        reload(boAnimation.views)
+        
+        if 'aniUtil' not in exclude:
+            getLog().debug('Reloading AniUtil')
+            import boAnimation.animUtil.util
+            import boAnimation.animUtil.encoder
+            import boAnimation.animUtil.decoder
+            reload(boAnimation.animUtil.util)
+            reload(boAnimation.animUtil.encoder)
+            reload(boAnimation.animUtil.decoder)
+        
+        if 'views' not in exclude:
+            getLog().debug('Reloading Views')
+            import boAnimation.views.animUtilViews
+            import boAnimation.views.mainViews
+            reload(boAnimation.views.animUtilViews)
+            reload(boAnimation.views.mainViews)
         
 
