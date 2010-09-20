@@ -20,7 +20,7 @@ class SettingsError(Exception):
 SECTION_FMT = '[{name}]\n'
 SETTING_FMT = '{s} = {sval}\n'
 NODE_FMT =    '{node}\n'
-CURVE_FMT =   ' {attr}\n'
+CURVE_FMT =   ' {attr} {weighted}\n'
 KEY_FMT =     '  {data}\n'
 KEYDATA_FMT = '{time} {value} {breakdown} {tanLock} {weightLock} {inTanType} {outTanType}'
 TANDATA_FMT = '{angle} {weight}'
@@ -43,7 +43,7 @@ class AnimEncoder(object):
     
     __all__ = ['__init__', 'encode', 'iterencode']
     required_settings = []
-    auto_settings = ['author', 'date', 'notes', 'startFrame', 'endFrame', 'linearUnit', 'fps']
+    auto_settings = ['author', 'date', 'notes', 'startFrame', 'endFrame', 'linearUnits', 'fps']
     all_settings = required_settings + auto_settings
     setting_err_fmt = '`{s}` was not set'
     setting_auto_fmt = '`{s}` has been set to `{sval}`'
@@ -58,11 +58,11 @@ class AnimEncoder(object):
     
     float_tol = 6
     
-    def __init__(self, startFrame=None, endFrame=None, linearUnit=None, fps=None, 
+    def __init__(self, startFrame=None, endFrame=None, linearUnits=None, fps=None, 
                 author=None, date=None, notes='', autoEnabled=True, **kw):
         self.startFrame = startFrame
         self.endFrame = endFrame
-        self.linearUnit = linearUnit
+        self.linearUnits = linearUnits
         self.fps = fps
         self.author = author
         self.date = date
@@ -95,7 +95,7 @@ class AnimEncoder(object):
     def _auto_endFrame(self):
         return getEndFrame()
     
-    def _auto_linearUnit(self):
+    def _auto_linearUnits(self):
         return getLinearUnit()
     
     def _auto_fps(self):
@@ -130,7 +130,12 @@ class AnimEncoder(object):
             LOG.debug('encoding node {0}/{1}: {2}'.format(num, count, node['name']))
             
             for curv in node['curves']:
-                kw = { 'attr':curv['attr'] }
+                kw = {
+                    'attr':curv['attr'],
+                    'weighted':int(curv['weighted']),
+                    'preInfinity':curv['preInfinity'],
+                    'postInfinity':curv['postInfinity'],
+                }
                 curveLine = fmt['curve'].format(**kw)
                 
                 animLines.append(curveLine)

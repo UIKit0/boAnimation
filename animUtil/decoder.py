@@ -11,9 +11,9 @@ LOG.setLevel(logging.DEBUG)
 
 
 SECTION_TAG = re.compile('\[(\w*)\]')
-SETTING = re.compile('(\w+)\s?=(.*)')
+SETTING = re.compile('(\w+)\s?=\s?(.*)')
 NODE = re.compile('([^\s]+)$')
-CURVE = re.compile('\s{1}([^\s]+$)')
+CURVE = re.compile('\s{1}([^\s]+) (\d)')
 KEYCHECK = re.compile('\s{2}.*')
 KEYITEMS = re.compile('(\S+)')
 
@@ -67,9 +67,20 @@ class AnimDecoder(object):
         m = crvpat.match(line)
         if m:
             curve = m.groups()[0]
+            try:
+                weighted = m.groups()[1]
+            except:
+                weighted = True
+            data = {
+                'attr':curve,
+                'weighted':bool(int(weighted)),
+                'preInfinity':'constant',
+                'postInfinity':'constant',
+                'keys':[]
+            }
             self.curCurveId += 1
             self.anim[self.curNodeId]['curves'].append({})
-            self.anim[self.curNodeId]['curves'][self.curCurveId] = {'attr':curve, 'keys':[]}
+            self.anim[self.curNodeId]['curves'][self.curCurveId] = data
             #LOG.debug('decoding curve: {0}'.format(curve))
             return
         
@@ -109,4 +120,8 @@ class AnimDecoder(object):
         for line in lines:
             self._lineDecode(line)
         
-        return self.anim
+        return {'anim':self.anim, 'settings':self.settings}
+
+
+
+

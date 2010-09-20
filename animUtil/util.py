@@ -96,11 +96,12 @@ def getAnimation(node):
         curveData['attr'] = attrs[i]
         curveData['preInfinity'] = str(curve.getPreInfinityType())
         curveData['postInfinity'] = str(curve.getPostInfinityType())
+        curveData['weighted'] = curve.isWeighted()
         curveData['keys'] = []
         num = curve.numKeys()
         for j in range(0, num):
             keyData = {}
-            keyData['time'] = curve.getTime(j)
+            keyData['time'] = float(curve.getTime(j))
             keyData['value'] = curve.getValue(j)
             keyData['breakdown'] = curve.isBreakdown(j)
             keyData['tangent'] = getTangent(curve, j)
@@ -136,14 +137,39 @@ def setAnimation(anim, create=True):
     
     for curveData in anim['curves']:
         attr = curveData['attr']
-        curve = getCurve(node, attr, create=create)
+        curve = getCurve(node, attr)
+        if curve is None:
+            if create:
+                if hasattr(node, attr):
+                    attrNode = getattr(node, attr)
+                    if attrNode.isKeyable():
+                        firstKey = curveData['keys'][0]['time']
+                        storeTime = currentTime()
+                        refresh(su=True)
+                        currentTime(firstKey)
+                        setKeyframe(attrNode)
+                        currentTime(storeTime)
+                        refresh(su=False)
+                        curve = getCurve(node, attr)
+                        LOG.debug('Created anim curve: {0} at time {1}'.format(curve, firstKey))
+                    else:
+                        LOG.debug('Could not create anim curve (not keyable): {0}.{1}'.format(node, attr))
+                        continue
+                else:
+                    LOG.debug('Could not create anim curve (missing attr): {0}.{1}'.format(node, attr))
+                    continue
+            else:
+                LOG.debug('No anim curve exists: {0}.{1}'.format(node, attr))
+                continue
         
         #LOG.debug('{0}/{1} - {2}'.format(num, count, curve))
         
-        if curve is None:
-            continue
+        #force the curve to have weighted tangents,
+        #then set correct value after tangents are modified
+        curve.setWeighted(True)
+        
         for key in curveData['keys']:
-            time = key['time']
+            time = dt.Time(key['time'])
             value = key['value']
             breakdown = key['breakdown']
             setKey(curve, time, value, breakdown)
@@ -151,24 +177,18 @@ def setAnimation(anim, create=True):
             time = key['time']
             tangent = key['tangent']
             setTangent(curve, time=time, **tangent)
+        
+        curve.setWeighted(curveData['weighted'])
 
 
-
-def getCurve(node, attr, create=False):
-    curves = keyframe(node, q=True, at=attr, name=True)
-    attrNode = getattr(node, attr)
-    if curves == []:
-        if create:
-            if attrNode.isKeyable():
-                setKeyframe(getattr(node, attr))
-                return PyNode(keyframe(node, q=True, at=attr, name=True)[0])
-            else:
-                LOG.error('{0} is not keyable'.format(attrNode))
-        else:
-            LOG.error('No animation curve exists for {0}'.format(attrNode))
-            return None
-    else:
-        return PyNode(curves[0])
+def getCurve(node, attr):
+    result = None
+    if hasattr(node, attr):
+        attrNode = getattr(node, attr)
+        curves = keyframe(node, q=True, at=attr, name=True)
+        if curves != []:
+            result = PyNode(curves[0])
+    return result
 
 
 def getKeyIndex(curve, time):

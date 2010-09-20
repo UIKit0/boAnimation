@@ -3,6 +3,7 @@ boAnimation.views - aniToolsViews
 """
 
 
+import sys, copy
 import boAnimation
 from boAnimation import animUtil
 from boViewGui import view
@@ -22,6 +23,7 @@ class AnimUtilMainView(view.View):
 class AnimImportExportView(view.View):
     _displayName = 'Anim Import Export'
     _winResize = [360, 300]
+    usePasteSettings = True
     btnTemplate = uiTemplate(force=True)
     btnTemplate.define(button, bgc=[0.2, 0.2, 0.2])
     stngsTemplate = uiTemplate(force=True)
@@ -124,6 +126,8 @@ class AnimImportExportView(view.View):
     def animListContent(self):
         with formLayout() as form:
             animList = textScrollList(w=self.aniListWidth, ams=True, sc=Callback(self.animListSelectCommand))
+            popupMenu(mm=True, b=3, p=animList)
+            menuItem(l='Print Animation', c=Callback(self.animListPrintCommand))
         
         formLayout(form, e=True,
             af=[(animList, 'top', 0),
@@ -153,7 +157,7 @@ class AnimImportExportView(view.View):
                     self.stngsFrameContent()
                 with frameLayout(l='Paste Settings', mw=4, mh=4, bs='out', cl=False, cll=True) as changeStngsFrame:
                     self.changeStngsFrameContent()
-                with frameLayout(l='Export Settings', mw=4, mh=4, bs='out', cl=False, cll=True) as exportStngsFrame:
+                with frameLayout(l='Export Settings', mw=4, mh=4, bs='out', cl=True, cll=True) as exportStngsFrame:
                     self.exportStngsContent()
             progBar = progressBar(h=self.progBarHeight)
         
@@ -193,25 +197,30 @@ class AnimImportExportView(view.View):
     def changeStngsFrameContent(self):
         labelWidth = 100
         rowHeight = 22
-        with formLayout(en=False) as mainForm:
-            with columnLayout(cal='right', adj=True, rs=2, w=labelWidth) as labelCol:
-                template = uiTemplate(force=True)
-                template.define(text, h=rowHeight)
-                with template:
-                    text(l='Time Offset')
-                    text(l='Sample Sub-Range')
-                    text(l='Convert Time Units')
+        with formLayout() as mainForm:
+            stngsTemplate = uiTemplate(force=True)
+            stngsTemplate.define(columnLayout, rs=2, adj=True)
+            stngsTemplate.define(button, h=rowHeight)
+            stngsTemplate.define(text, h=rowHeight)
+            stngsTemplate.define(textField, h=rowHeight)
+            stngsTemplate.define(floatField, h=rowHeight)
+            with stngsTemplate:
+                with columnLayout(cal='right', w=labelWidth) as labelCol:
+                    text(l='Time Offset', en=False)
+                    text(l='Sample Sub-Range', en=False)
+                    text(l='Convert Time Units', en=False)
                     text(l='Object Association')
                     text(l='')
-            with columnLayout(cal='left', adj=True, rs=2) as controlCol:
-                floatField(h=rowHeight, w=60)
-                with rowLayout(h=rowHeight, nc=3, cw3=(20, 60, 60)):
-                    checkBox(h=rowHeight, l='')
-                    floatField(h=rowHeight, w=60)
-                    floatField(h=rowHeight, w=60)
-                checkBox(h=rowHeight, l='')
-                radioButtonGrp(h=rowHeight, nrb=3, la3=('Default', 'Smart', 'Search and Replace'), cw3=(66, 60, 100), sl=1)
-                text(l='Exact naming matches only', en=False)
+                with columnLayout(cal='left') as controlCol:
+                    floatField(w=60, en=False)
+                    with rowLayout(nc=3, cw3=(20, 60, 60), en=False):
+                        checkBox(l='')
+                        floatField(w=60)
+                        floatField(w=60)
+                    checkBox(h=rowHeight, l='', en=False)
+                    objAssocRadio = radioButtonGrp(h=rowHeight, nrb=3, en2=False, la3=('Default', 'Smart', 'Search and Replace'), cw3=(66, 60, 100), sl=1, cc=Callback(self.objAssocRadioChangeCommand))
+                    objAssocText = text(l='', en=False)
+                    self.objAssocContent()
         formLayout(mainForm, e=True,
             af=[
                 (labelCol, 'top', 0),
@@ -224,6 +233,35 @@ class AnimImportExportView(view.View):
             ],
         )
         self.changeStngsMainForm = mainForm
+        self.objAssocRadio = objAssocRadio
+        self.objAssocText = objAssocText
+        self.objAssocRadioChangeCommand()
+    
+    def objAssocContent(self):
+        with columnLayout() as col1:
+            pass
+        with columnLayout() as col2:
+            button(l='Preview')
+        with columnLayout() as col3:
+            with formLayout(nd=100) as form3:
+                searchField = textField()
+                replaceText = text(l=' -> ')
+                replaceField = textField()
+            formLayout(form3, e=True,
+                af=[
+                    (searchField, 'left', 0),
+                    (replaceField, 'right', 0),
+                ],
+                ap=[ (replaceText, 'left', -10, 50) ],
+                ac=[
+                    (searchField, 'right', self.sep, replaceText),
+                    (replaceField, 'left', self.sep, replaceText),
+                ]
+            )
+            srchRepPreviewBtn = button(l='Preview', w=60, bgc=[0.28, 0.28, 0.28], c=Callback(self.srchRepPreviewBtnHandler))
+        self.objAssocLayouts = [col1, col2, col3]
+        self.searchField = searchField
+        self.replaceField = replaceField
     
     def exportStngsContent(self):
         labelWidth = 100
@@ -257,61 +295,86 @@ class AnimImportExportView(view.View):
             self.setProg(visible=True)
             anim = animUtil.getAnim(selList, self.updateProg)
             self.setProg(visible=False)
-            newName = self.getNewCopyName()
+            newName = self.getNewAnimName()
             self.animData[newName] = anim
             self.updateAnimList()
+            LOG.debug(self.animData)
             return anim
         return None
     
     def importAnimBtnHandler(self):
-        f = 'L:/show/shots/animExports/{0}_temp.ani'.format(os.environ['USER'])
-        anim = None
-        with open(f, 'rb') as fp:
-            anim = animUtil.load(fp)
-            LOG.debug('Anim: {0}'.format(anim))
+        proj = workspace.getPath()
+        if os.path.exists(os.path.join(proj, 'animExports')):
+            path = os.path.join(proj, 'animExports')
+        else:
+            path = proj
+        f = fileDialog2(dir=path, fm=1)
+        if f is None:
+            return
+        if type(f) is list:
+            f = f[0]
         
-        settings = {
-            'author':'',
-            'date':'',
-            'notes':'',
-            'startFrame':'',
-            'endFrame':'',
-            'linearUnits':'',
-            'fps':'',
-        }
-        data = {
-            'settings':settings,
-            'anim':anim,
-        }
-        if anim is not None:
-            self.animData['{0}_temp {1:03}'.format(os.environ['USER'], self.importIter)] = data
+        animData = None
+        with open(f, 'rb') as fp:
+            animData = animUtil.load(fp)
+        
+        name = os.path.splitext(os.path.basename(f))[0]
+        
+        #prompt if overwriting
+        if self.animData.has_key(name):
+            if not self.overwriteAnimItemWarning(name):
+                return
+        
+        if animData is not None:
+            self.animData[name] = animData
             self.importIter += 1
             self.updateAnimList()
+        
+        self.animList.setSelectItem(name)
     
     def setAnimBtnHandler(self):
-        selItems = self.animList.getSelectItem()
-        if selItems is not None:
-            selItem = selItems[0]
-            if self.animData.has_key(selItem):
-                self.setProg(visible=True)
-                animUtil.setAnim(self.animData[selItem]['anim'], self.animData[selItem]['settings'], self.updateProg)
-                self.setProg(visible=False)
+        animData = self.getSelectedAnimData()
+        if animData is None: return
+        
+        if self.usePasteSettings:
+            LOG.debug('Applying Paste Settings')
+            pasteAnimData = self.applyAnimDataPasteSettings(animData)
+            LOG.debug('Paste Settings Applied')
+        else:
+            pasteAnimData = animData
+        
+        self.setProg(visible=True)
+        animUtil.setAnim(pasteAnimData['anim'], pasteAnimData['settings'], self.updateProg)
+        self.setProg(visible=False)
+        LOG.debug(self.animData)
     
     def exportAnimBtnHandler(self):
-        selItems = self.animList.getSelectItem()
-        if selItems is not None:
-            selItem = selItems[0]
-            f = 'L:/show/shots/animExports/{0}_temp.ani'.format(os.environ['USER'])
-            with open(f, 'wb') as fp:
-                animUtil.dump(self.animData[selItem]['anim'], fp, dataIsAnim=True, **self.animData[selItem]['settings'])
+        animData = self.getSelectedAnimData()
+        if animData is None:
+            return
+        
+        proj = workspace.getPath()
+        if os.path.exists(os.path.join(proj, 'animExports')):
+            path = os.path.join(proj, 'animExports')
+        else:
+            path = proj
+        f = fileDialog2(dir=path, fm=0)
+        if f is None:
+            return
+        if type(f) is list:
+            f = f[0]
+        
+        base, ext = os.path.splitext(f)
+        f = '{0}.ani'.format(base)
+        
+        with open(f, 'wb') as fp:
+            animUtil.dump(animData['anim'], fp, dataIsAnim=True, **animData['settings'])
     
     
     def animListSelectCommand(self):
-        selItems = self.animList.getSelectItem()
-        if selItems is not None:
-            selItem = selItems[0]
-            data = self.animData[selItem]['settings']
-            nodeCount = len(self.animData[selItem]['anim'])
+        animData = self.getSelectedAnimData()
+        if animData is not None:
+            nodeCount = len(animData['anim'])
             dataList = [
                 'author',
                 'notes',
@@ -322,10 +385,16 @@ class AnimImportExportView(view.View):
                 'linearUnits',
                 'nodes',
             ]
-            self.setSettings(dataList=dataList, nodes=nodeCount, **data)
+            self.setSettings(dataList=dataList, nodes=nodeCount, **animData['settings'])
         else:
             self.setSettings()
     
+    def animListPrintCommand(self):
+        import pprint
+        selItem = self.getSelectedAnimItem()
+        animData = self.getSelectedAnimData()
+        if animData is not None:
+            sys.__stdout__.write('Anim Data for {0}:\n{1}'.format(selItem, pprint.pformat(animData)))
     
     
     def updateAnimList(self):
@@ -347,6 +416,34 @@ class AnimImportExportView(view.View):
         if visible is not None:
             self.progBar.setVisible(visible)
     
+    def objAssocRadioChangeCommand(self):
+        stateStrs = [
+            'Exact naming matches only',
+            'Currently not implemented (will use default)',
+            'Search and replace within each node\'s name',
+        ]
+        state = self.objAssocRadio.getSelect() - 1
+        self.objAssocText.setLabel(stateStrs[state])
+        for i in range(3):
+            if i is state:
+                self.objAssocLayouts[i].setVisible(True)
+            else:
+                self.objAssocLayouts[i].setVisible(False)
+    
+    def srchRepPreviewBtnHandler(self):
+        srchStr, repStr = self.searchField.getText(), self.replaceField.getText()
+        animData = self.getSelectedAnimData()
+        if animData is None: return
+        srchRepDct = self.getSrchRepDct(animData, srchStr, repStr)
+        
+        longestVal = 0
+        for key in srchRepDct.keys():
+            if len(key) > longestVal:
+                longestVal = len(key)
+        
+        for key, value in srchRepDct.items():
+            print '{0:<{width}} -> {1}'.format(key, value, width=longestVal)
+    
     def clearStngsFrame(self):
         nch = frameLayout(self.stngsFrame, q=True, nch=True)
         if nch > 0:
@@ -356,12 +453,19 @@ class AnimImportExportView(view.View):
     
     def setSettings(self, dataList=None, labelWidth=70, rowHeight=16, **kw):
         self.clearStngsFrame()
+        keys, values = [], []
         if dataList is None:
             keys = kw.keys()
             values = kw.values()
         else:
-            keys = dataList
-            values = [kw[key] for key in keys]
+            for key in dataList:
+                if kw.has_key(key):
+                    keys.append(key)
+                    values.append(kw[key])
+            for key in kw.keys():
+                if not key in keys:
+                    keys.append(key)
+                    values.append(kw[key])
             
         if kw != {}:
             with self.stngsFrame:
@@ -396,38 +500,60 @@ class AnimImportExportView(view.View):
             self.changeStngsMainForm.setEnable(enabled)
     
     
-    def getNewCopyName(self):
+    def getNewAnimName(self):
         import time
         ltime = time.localtime()
         hr, min, sec = ltime.tm_hour, ltime.tm_min, ltime.tm_sec
         timefmt = '{0:02}:{1:02}:{2:02}'.format(hr, min, sec)
-        fmt = 'copy [{0}]'
+        fmt = 'Anim Copy [{0}]'
         return fmt.format(timefmt)
     
+    def getSelectedAnimItem(self):
+        result = None
+        if hasattr(self, 'animList'):
+            selItems = self.animList.getSelectItem()
+            if selItems is not None and len(selItems) > 0:
+                result = selItems[0]
+        return result
+    
+    def getSelectedAnimData(self):
+        selItem = self.getSelectedAnimItem()
+        if selItem is not None:
+            return copy.deepcopy(self.animData[selItem])
+        else:
+            return None
+    
+    def getSrchRepDct(self, animData, srchStr, repStr):
+        result = {}
+        if animData is not None:
+            for node in animData['anim']:
+                result[node['name']] = node['name'].replace(srchStr, repStr)
+        return result
+    
     def renameAnimItem(self):
-        selItems = self.animList.getSelectItem()
-        if selItems is not None:
-            selItem = selItems[0]
-            if self.animData.has_key(selItem):
-                kw = {
-                    't':'Rename \'{0}\''.format(selItem),
-                    'm':'New Name:',
-                    'b':('Rename', 'Cancel'),
-                    'cb':'Cancel',
-                    'db':'Rename',
-                    'ds':'dismiss',
-                    'p':'boAnimWin',
-                }
-                LOG.debug(kw)
-                result = promptDialog(**kw)
-                LOG.debug('result: {0}'.format(result))
-                if result == 'Rename':
-                    newName = promptDialog(q=True)
-                    if newName != '':
-                        LOG.debug('New Name: {0}'.format(newName))
-                        self.animData[newName] = self.animData[selItem]
-                        del self.animData[selItem]
-                        self.updateAnimList()
+        selItem = self.getSelectedAnimItem()
+        if selItem is None:
+            return
+        if self.animData.has_key(selItem):
+            kw = {
+                't':'Rename \'{0}\''.format(selItem),
+                'm':'New Name:',
+                'b':('Rename', 'Cancel'),
+                'cb':'Cancel',
+                'db':'Rename',
+                'ds':'dismiss',
+                'p':'boAnimWin',
+            }
+            LOG.debug(kw)
+            result = promptDialog(**kw)
+            LOG.debug('result: {0}'.format(result))
+            if result == 'Rename':
+                newName = promptDialog(q=True)
+                if newName != '':
+                    LOG.debug('New Name: {0}'.format(newName))
+                    self.animData[newName] = self.animData[selItem]
+                    del self.animData[selItem]
+                    self.updateAnimList()
     
     def removeAnimItems(self):
         selItems = self.animList.getSelectItem()
@@ -453,8 +579,37 @@ class AnimImportExportView(view.View):
             return True
         else:
             return False
+    
+    def overwriteAnimItemWarning(self, name):
+        kargs = {
+            't':'Overwrite Anim Item?',
+            'm':'''An anim clip already exists with the name\n`{0}`\ndo you want to overwrite it?'''.format(name),
+            'icn':'warning',
+            'b':['Overwrite', 'Cancel'],
+            'cb':'Cancel',
+            'ma':'center',
+            'p':'boAnimWin',
+        }
+        result = confirmDialog(**kargs)
+        if result == 'Overwrite':
+            return True
+        else:
+            return False
+    
+    def applyAnimDataPasteSettings(self, animData):
+        """Modify values/settings within animData based on paste settings.
+        This method assumes that the animData is a deep copy of the source data"""
+        useSrchRep = (self.objAssocRadio.getSelect() - 1 == 2)
+        if useSrchRep:
+            LOG.debug('Applying search and replace...')
+            srchStr, repStr = self.searchField.getText(), self.replaceField.getText()
+            srchRepDct = self.getSrchRepDct(animData, srchStr, repStr)
+            for i in range( len(animData['anim']) ):
+                animData['anim'][i]['name'] = srchRepDct[ animData['anim'][i]['name'] ]
+        return animData
 
-            
+
+
 
 
 VIEWS = [AnimUtilMainView, AnimImportExportView]
