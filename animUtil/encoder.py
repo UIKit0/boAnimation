@@ -32,6 +32,7 @@ TANTYPE_ENC_DCT = {
     'smooth':'sm',
     'spline':'sp',
     'step':'st',
+	'plateau':'pl',
 }
 TANGENT_DEC_DCT = {}
 for key, value in TANTYPE_ENC_DCT.items():
@@ -53,7 +54,7 @@ class AnimEncoder(object):
     key_fmt = '  {data}\n'
     keydata_fmt = '{time} {value} {breakdown} {tanLock} {weightLock} {inTanType} {outTanType}'
     tandata_fmt = '{angle} {weight}'
-    tan_types = {'clamped':'cl', 'fixed':'fi', 'flat':'fl', 'linear':'li', 'smooth':'sm', 'spline':'sp', 'step':'st'}
+    tan_types = {'clamped':'cl', 'fixed':'fi', 'flat':'fl', 'linear':'li', 'smooth':'sm', 'spline':'sp', 'step':'st', 'plateau':'pl'}
     separator = ['\n', '\n']
     
     float_tol = 6
