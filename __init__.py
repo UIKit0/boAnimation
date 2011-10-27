@@ -17,7 +17,7 @@
 
 import sys, os, logging
 
-__VERSION__ = (0, 3, 6)
+__VERSION__ = (0, 3, 7)
 
 __version__ = '.'.join([str(n) for n in __VERSION__])
 __author__ = 'Bohdon Sayre'

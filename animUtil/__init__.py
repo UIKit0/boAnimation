@@ -27,7 +27,7 @@ def dump(data, fp, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, l
     if dataIsAnim:
         anim = data
     else:
-        anim = getAnimations(data)
+        anim = getAnimations(data, startFrame, endFrame)
     lines = cls(cls=cls, startFrame=startFrame, endFrame=endFrame, linearUnits=linearUnits,
             fps=fps, author=author, date=date, notes=notes, autoEnabled=autoEnabled, **kw).iterencode(anim)
     for line in lines:
@@ -43,13 +43,12 @@ def dumps(data, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, line
     if dataIsAnim:
         anim = data
     else:
-        anim = getAnimations(data)
+        anim = getAnimations(data, startFrame, endFrame)
     return cls(cls=cls, startFrame=startFrame, endFrame=endFrame, linearUnits=linearUnits,
             fps=fps, author=author, date=date, notes=notes, autoEnabled=autoEnabled, **kw).encode(anim)
 
 def getAnim(nodes, updateFunc=None):
     """Get an animation object that includes both anim data and settings"""
-    anim = getAnimations(nodes, updateFunc)
     settings = {
         'author':getUser(),
         'date':getDate(),
@@ -59,6 +58,7 @@ def getAnim(nodes, updateFunc=None):
         'linearUnits':getLinearUnit(),
         'fps':getFps()
     }
+    anim = getAnimations(nodes, settings['startFrame'], settings['endFrame'], updateFunc=updateFunc)
     return {'anim':anim, 'settings':settings}
     
 def setAnim(anim, settings, updateFunc=None):

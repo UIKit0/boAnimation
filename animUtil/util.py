@@ -50,7 +50,7 @@ def getDate():
 
 
 
-def getAnimations(nodes, updateFunc=None):
+def getAnimations(nodes, startFrame=None, endFrame=None, updateFunc=None):
     """
     Return all animation data for all specified nodes
     The result is a list of animation data dictionaries
@@ -58,7 +58,7 @@ def getAnimations(nodes, updateFunc=None):
     animList = []
     count, num = len(nodes), 0
     for node in nodes:
-        anim = getAnimation(node)
+        anim = getAnimation(node, startFrame, endFrame)
         animList.append(anim)
         num += 1
         LOG.debug('getting anim {0}/{1}: {2}'.format(num, count, node))
@@ -66,7 +66,7 @@ def getAnimations(nodes, updateFunc=None):
             updateFunc(count, num)
     return animList
 
-def getAnimation(node):
+def getAnimation(node, startFrame=None, endFrame=None):
     """
     Return all animation data for the specified node.
     
@@ -102,6 +102,12 @@ def getAnimation(node):
         for j in range(0, num):
             keyData = {}
             keyData['time'] = float(curve.getTime(j))
+            if startFrame is not None:
+                if keyData['time'] < startFrame:
+                    continue
+            if endFrame is not None:
+                if keyData['time'] > endFrame:
+                    continue
             keyData['value'] = curve.getValue(j)
             keyData['breakdown'] = curve.isBreakdown(j)
             keyData['tangent'] = getTangent(curve, j)
