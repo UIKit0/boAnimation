@@ -1,0 +1,206 @@
+<?xml version="1.0" ?>
+<animation version="0.6">
+	<author name="Bohdon Sayre" username="bsayre"/>
+	<settings endFrame="24" startFrame="1"/>
+	<info dateCreated="2010-08-20">
+		This is an example file
+	</info>
+	<nodes>
+		<node name="pCube1">
+			<animCurve attr="rotateX" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="0.317636159743">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="0.00962908389696">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="-0.205080311022">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="-0.205080311022">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="-0.0650626174752">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="3.13801033776">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="rotateY" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="-0.426043781571">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="0.0931148592174">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="0.453178067276">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="0.453178067276">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="0.352982492611">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="1.28577195477">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="rotateZ" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="-0.190023294566">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="-0.234761039855">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="-0.392230192812">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="-0.392230192812">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="0.521977228584">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="3.05711674325">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="visibility" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="1.0">
+					<tangents in="smooth" lock="True" out="step" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="1.0">
+					<tangents in="smooth" lock="True" out="step" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="1.0">
+					<tangents in="smooth" lock="True" out="step" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="1.0">
+					<tangents in="smooth" lock="True" out="step" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="translateX" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="-1.02535724515">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="0.679634187014">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="2.28934545158">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="2.42743326267">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="1.63525815881">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="1.4018656218">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="translateY" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="0.184923146261">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="-2.24812290716">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="7.49131654929">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="9.36769298871">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="-0.57710214018">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="1.9379838531">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="translateZ" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="11.9257258444">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="8.39915160637">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="1.09870736898">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="-1.28575697015">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="-5.92548363203">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="-10.6261644361">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="scaleX" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="2.58604383217">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="1.6202046158">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="3.92948650901">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="2.15915334841">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="1.4833770212">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="2.21105409386">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="scaleY" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="2.58604383217">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="1.6202046158">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="3.92948650901">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="2.15915334841">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="1.4833770212">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="2.21105409386">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+			<animCurve attr="scaleZ" postInfinity="constant" preInfinity="constant">
+				<key inbetween="False" time="1.0" value="2.58604383217">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="6.0" value="1.6202046158">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="12.0" value="3.92948650901">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="16.0" value="2.15915334841">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="20.0" value="1.4833770212">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+				<key inbetween="False" time="24.0" value="2.21105409386">
+					<tangents in="clamped" lock="True" out="clamped" weightLock="True"/>
+				</key>
+			</animCurve>
+		</node>
+	</nodes>
+</animation>

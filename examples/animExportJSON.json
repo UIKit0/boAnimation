@@ -1,0 +1,947 @@
+[
+  {
+    "name": "pCube1", 
+    "curves": [
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.317636159743", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.00962908389696", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.205080311022", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.205080311022", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.0650626174752", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "3.13801033776", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "rotateX"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.426043781571", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.0931148592174", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.453178067276", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.453178067276", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.352982492611", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.28577195477", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "rotateY"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.190023294566", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.234761039855", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.392230192812", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.392230192812", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.521977228584", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "3.05711674325", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "rotateZ"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "smooth"
+              }, 
+              "out": {
+                "type": "step"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.0", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "smooth"
+              }, 
+              "out": {
+                "type": "step"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.0", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "smooth"
+              }, 
+              "out": {
+                "type": "step"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.0", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "smooth"
+              }, 
+              "out": {
+                "type": "step"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.0", 
+            "time": "20.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "visibility"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-1.02535724515", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.679634187014", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.28934545158", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.42743326267", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.63525815881", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.4018656218", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "translateX"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "0.184923146261", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-2.24812290716", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "7.49131654929", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "9.36769298871", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-0.57710214018", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.9379838531", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "translateY"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "11.9257258444", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "8.39915160637", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.09870736898", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-1.28575697015", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-5.92548363203", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "-10.6261644361", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "translateZ"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.58604383217", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.6202046158", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "3.92948650901", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.15915334841", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.4833770212", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.21105409386", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "scaleX"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.58604383217", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.6202046158", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "3.92948650901", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.15915334841", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.4833770212", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.21105409386", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "scaleY"
+      }, 
+      {
+        "keys": [
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.58604383217", 
+            "time": "1.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.6202046158", 
+            "time": "6.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "3.92948650901", 
+            "time": "12.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.15915334841", 
+            "time": "16.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "1.4833770212", 
+            "time": "20.0"
+          }, 
+          {
+            "breakdown": "False", 
+            "tangents": {
+              "lock": "True", 
+              "in": {
+                "type": "clamped"
+              }, 
+              "out": {
+                "type": "clamped"
+              }, 
+              "weightLock": "True"
+            }, 
+            "value": "2.21105409386", 
+            "time": "24.0"
+          }
+        ], 
+        "postInfinity": "constant", 
+        "preInfinity": "constant", 
+        "attr": "scaleZ"
+      }
+    ]
+  }
+]
