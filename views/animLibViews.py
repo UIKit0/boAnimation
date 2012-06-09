@@ -3,19 +3,19 @@ boAnimation.views - aniLibViews
 """
 
 
-import boAnimation
-from boViewGui import view
 from pymel.core import *
+import boViewGui
+import boAnimation
 
 LOG = boAnimation.getLog('animLibViews')
 
 
-class AnimLibMainView(view.View):
-    _displayName = 'Anim Library'
+class AnimLibMainView(boViewGui.View):
+    displayName = 'Anim Library'
     def links(self):
         return ['MainView', self.viewName]
     
-    def bodyContent(self):
+    def buildBody(self):
         button()
 
 

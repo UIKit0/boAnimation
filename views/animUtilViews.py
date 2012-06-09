@@ -3,25 +3,26 @@ boAnimation.views - aniToolsViews
 """
 
 
-import sys, copy
-import boAnimation
-from boAnimation import animUtil
-from boViewGui import view
 from pymel.core import *
+import copy
+import sys
+import boViewGui
+import boAnimation
+import animUtil
 
 LOG = boAnimation.getLog('animUtilViews')
 
 
-class AnimUtilMainView(view.View):
-    _displayName = 'Anim Util'
+class AnimUtilMainView(boViewGui.View):
+    displayName = 'Anim Util'
     def links(self):
         return ['MainView', self.viewName]
     
-    def bodyContent(self):
+    def buildBody(self):
         pass
 
-class AnimImportExportView(view.View):
-    _displayName = 'Anim Import Export'
+class AnimImportExportView(boViewGui.View):
+    displayName = 'Anim Import Export'
     _winResize = [360, 300]
     usePasteSettings = True
     btnTemplate = uiTemplate(force=True)
@@ -41,7 +42,7 @@ class AnimImportExportView(view.View):
     def links(self):
         return ['MainView', self.viewName]
     
-    def bodyContent(self):
+    def buildBody(self):
         with formLayout(nd=100) as form:
             leftForm = self.leftContent()
             rightForm = self.rightContent()

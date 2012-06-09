@@ -4,21 +4,21 @@ boAnimation.views - mainViews
 
 
 import boAnimation
-from boViewGui import view
+import boViewGui
 from pymel.core import *
 
 LOG = boAnimation.getLog('mainViews')
 
 
-class MainView(view.View):
+class MainView(boViewGui.View):
     """The main view of boAnimtion"""
-    _displayName = 'Main'
+    displayName = 'Main'
     _bodyMargins = [20, 20]
     _winResize = [200, 260]
     def links(self):
         return [self.viewName]
     
-    def bodyContent(self):
+    def buildBody(self):
         with columnLayout(adj=True, rs=10):
             self.viewItem( l='Animation Library', viewName='AnimLibMainView', en=False)
             self.viewItem( l='Animation Import / Export', viewName='AnimImportExportView')
