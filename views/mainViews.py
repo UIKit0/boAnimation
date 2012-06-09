@@ -4,13 +4,13 @@ boAnimation.views - mainViews
 
 
 import boAnimation
-import boViewGui
+import viewGui
 from pymel.core import *
 
 LOG = boAnimation.getLog('mainViews')
 
 
-class MainView(boViewGui.View):
+class MainView(viewGui.View):
     """The main view of boAnimtion"""
     displayName = 'Main'
     _bodyMargins = [20, 20]

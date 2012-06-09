@@ -5,7 +5,7 @@ boAnimation - gui
 import logging
 import boAnimation
 from boAnimation.views import animLibViews, animUtilViews, mainViews
-import boViewGui
+import viewGui
 
 LOG = boAnimation.getLog('gui')
 
@@ -20,6 +20,6 @@ VIEWS.extend(mainViews.VIEWS)
 
 
 def Gui(defaultView='MainView'):
-    """Instance and create a boViewGui Gui"""
-    g = boViewGui.Gui(WIN_TITLE, WIN_NAME, VIEWS, defaultView)
+    """Instance and create a viewGui Gui"""
+    g = viewGui.Gui(WIN_TITLE, WIN_NAME, VIEWS, defaultView)
     g.create()

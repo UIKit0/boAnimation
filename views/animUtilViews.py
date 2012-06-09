@@ -6,14 +6,14 @@ boAnimation.views - aniToolsViews
 from pymel.core import *
 import copy
 import sys
-import boViewGui
+import viewGui
 import boAnimation
-import animUtil
+from boAnimation import animUtil
 
 LOG = boAnimation.getLog('animUtilViews')
 
 
-class AnimUtilMainView(boViewGui.View):
+class AnimUtilMainView(viewGui.View):
     displayName = 'Anim Util'
     def links(self):
         return ['MainView', self.viewName]
@@ -21,7 +21,7 @@ class AnimUtilMainView(boViewGui.View):
     def buildBody(self):
         pass
 
-class AnimImportExportView(boViewGui.View):
+class AnimImportExportView(viewGui.View):
     displayName = 'Anim Import Export'
     _winResize = [360, 300]
     usePasteSettings = True

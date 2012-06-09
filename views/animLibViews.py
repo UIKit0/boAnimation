@@ -4,13 +4,13 @@ boAnimation.views - aniLibViews
 
 
 from pymel.core import *
-import boViewGui
+import viewGui
 import boAnimation
 
 LOG = boAnimation.getLog('animLibViews')
 
 
-class AnimLibMainView(boViewGui.View):
+class AnimLibMainView(viewGui.View):
     displayName = 'Anim Library'
     def links(self):
         return ['MainView', self.viewName]
