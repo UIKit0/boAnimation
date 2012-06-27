@@ -54,7 +54,7 @@ class AnimEncoder(object):
     key_fmt = '  {data}\n'
     keydata_fmt = '{time} {value} {breakdown} {tanLock} {weightLock} {inTanType} {outTanType}'
     tandata_fmt = '{angle} {weight}'
-    tan_types = {'clamped':'cl', 'fixed':'fi', 'flat':'fl', 'linear':'li', 'smooth':'sm', 'spline':'sp', 'step':'st', 'plateau':'pl'}
+    tan_types = {'clamped':'cl', 'fixed':'fi', 'flat':'fl', 'linear':'li', 'smooth':'sm', 'spline':'sp', 'step':'st', 'plateau':'pl', 'auto':'a'}
     separator = ['\n', '\n']
     
     float_tol = 6

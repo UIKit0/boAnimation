@@ -19,7 +19,7 @@ KEYITEMS = re.compile('(\S+)')
 
 class AnimDecoder(object):
     
-    tan_types = {'cl':'clamped', 'fi':'fixed', 'fl':'flat', 'li':'linear', 'sm':'smooth', 'sp':'spline', 'st':'step', 'pl':'plateau'}
+    tan_types = {'cl':'clamped', 'fi':'fixed', 'fl':'flat', 'li':'linear', 'sm':'smooth', 'sp':'spline', 'st':'step', 'pl':'plateau', 'a':'auto'}
     
     def __init__(self):
         self._reinit()
