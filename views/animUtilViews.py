@@ -207,13 +207,15 @@ class AnimImportExportView(viewGui.View):
             stngsTemplate.define(floatField, h=rowHeight)
             with stngsTemplate:
                 with columnLayout(cal='right', w=labelWidth) as labelCol:
-                    text(l='Time Offset', en=False)
+                    text(l='Paste At Time', en=True)
                     text(l='Sample Sub-Range', en=False)
                     text(l='Convert Time Units', en=False)
                     text(l='Object Association')
                     text(l='')
                 with columnLayout(cal='left') as controlCol:
-                    floatField(w=60, en=False)
+                    with viewGui.gridFormLayout(numberOfRows=1):
+                        self.pasteAtTimeField = intField(w=60, en=True, cc=Callback(self.animPasteAtTimeChanged))
+                        self.pasteAtTimeText = text(l='', en=True)
                     with rowLayout(nc=3, cw3=(20, 60, 60), en=False):
                         checkBox(l='')
                         floatField(w=60)
@@ -345,9 +347,22 @@ class AnimImportExportView(viewGui.View):
             pasteAnimData = animData
         
         self.setProg(visible=True)
-        animUtil.setAnim(pasteAnimData['anim'], pasteAnimData['settings'], self.updateProg)
+        offset = self.pasteAtTimeField.getValue() - pasteAnimData['settings']['startFrame']
+        if offset:
+            anim = self.offsetAnim(pasteAnimData['anim'], offset)
+        else:
+            anim = pasteAnimData['anim']
+        animUtil.setAnim(anim, pasteAnimData['settings'], self.updateProg)
         self.setProg(visible=False)
         LOG.debug(self.animData)
+
+    def offsetAnim(self, anim, offset):
+        new = copy.deepcopy(anim)
+        for n in new:
+            for c in n['curves']:
+                for k in c['keys']:
+                    k['time'] = k['time'] + offset
+        return new
     
     def exportAnimBtnHandler(self):
         animData = self.getSelectedAnimData()
@@ -387,8 +402,19 @@ class AnimImportExportView(viewGui.View):
                 'nodes',
             ]
             self.setSettings(dataList=dataList, nodes=nodeCount, **animData['settings'])
+            self.pasteAtTimeField.setValue(animData['settings']['startFrame'])
+            self.animPasteAtTimeChanged()
         else:
             self.setSettings()
+            self.pasteAtTimeText.setLabel('')
+
+    def animPasteAtTimeChanged(self):
+        animData = self.getSelectedAnimData()
+        if animData is not None:
+            oldStart = animData['settings']['startFrame']
+            newStart = self.pasteAtTimeField.getValue()
+            offset = newStart - oldStart
+            self.pasteAtTimeText.setLabel('{0} - {1}'.format(newStart, animData['settings']['endFrame'] + offset))
     
     def animListPrintCommand(self):
         import pprint

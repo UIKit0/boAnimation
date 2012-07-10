@@ -49,15 +49,21 @@ def dumps(data, cls=None, dataIsAnim=False, startFrame=None, endFrame=None, line
 
 def getAnim(nodes, updateFunc=None):
     """Get an animation object that includes both anim data and settings"""
+    import mbotAnimation
+    if mbotAnimation.utils.timeRangeIsSelected():
+        st, en = tuple(mbotAnimation.utils.getSelectedTimeRange())
+    else:
+        st, en = getStartFrame(), getEndFrame()
     settings = {
         'author':getUser(),
         'date':getDate(),
         'notes':'',
-        'startFrame':getStartFrame(),
-        'endFrame':getEndFrame(),
+        'startFrame':st,
+        'endFrame':en,
         'linearUnits':getLinearUnit(),
         'fps':getFps()
     }
+
     anim = getAnimations(nodes, settings['startFrame'], settings['endFrame'], updateFunc=updateFunc)
     return {'anim':anim, 'settings':settings}
     
