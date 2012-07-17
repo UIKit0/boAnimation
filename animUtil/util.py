@@ -142,6 +142,8 @@ def setAnimation(anim, create=True):
         return
     
     for curveData in anim['curves']:
+        if not len(curveData['keys']):
+            continue
         attr = curveData['attr']
         curve = getCurve(node, attr)
         if curve is None:
