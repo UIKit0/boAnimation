@@ -347,7 +347,7 @@ class AnimImportExportView(viewGui.View):
             pasteAnimData = animData
         
         self.setProg(visible=True)
-        offset = self.pasteAtTimeField.getValue() - pasteAnimData['settings']['startFrame']
+        offset = self.pasteAtTimeField.getValue() - float(pasteAnimData['settings']['startFrame'])
         if offset:
             anim = self.offsetAnim(pasteAnimData['anim'], offset)
         else:
@@ -402,7 +402,7 @@ class AnimImportExportView(viewGui.View):
                 'nodes',
             ]
             self.setSettings(dataList=dataList, nodes=nodeCount, **animData['settings'])
-            self.pasteAtTimeField.setValue(animData['settings']['startFrame'])
+            self.pasteAtTimeField.setValue(float(animData['settings']['startFrame']))
             self.animPasteAtTimeChanged()
         else:
             self.setSettings()
@@ -411,10 +411,11 @@ class AnimImportExportView(viewGui.View):
     def animPasteAtTimeChanged(self):
         animData = self.getSelectedAnimData()
         if animData is not None:
-            oldStart = animData['settings']['startFrame']
+            endFrame = float(animData['settings']['endFrame'])
+            oldStart = float(animData['settings']['startFrame'])
             newStart = self.pasteAtTimeField.getValue()
             offset = newStart - oldStart
-            self.pasteAtTimeText.setLabel('{0} - {1}'.format(newStart, animData['settings']['endFrame'] + offset))
+            self.pasteAtTimeText.setLabel('{0} - {1}'.format(newStart, endFrame + offset))
     
     def animListPrintCommand(self):
         import pprint
